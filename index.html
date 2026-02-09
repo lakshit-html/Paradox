@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Paradox Studio - Premier digital innovation studio in Jodhpur, Rajasthan. Websites, games, apps, 3D visuals & NFTs.">
+    <title>Paradox Studio | Digital Innovation Studio Jodhpur</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+         :root {
+            --black: #0a0a0a;
+            --dark-gray: #1a1a1a;
+            --gray: #2a2a2a;
+            --light-gray: #4a4a4a;
+            --white: #ffffff;
+            --accent-1: #EDEDCE;
+            --accent-2: #629FAD;
+            --accent-3: #296374;
+            --accent-4: #0C2C55;
+            --worm-color: #3a4a5a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(ellipse at center, #0f0f23 0%, var(--black) 70%);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+        /* Worm Background */
+        
+        .worms-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .worm {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-2), var(--accent-1), var(--accent-2), transparent);
+            border-radius: 1px;
+            animation: wormMove linear infinite;
+            opacity: 0.25;
+        }
+        
+        @keyframes wormMove {
+            0% {
+                transform: translateX(-100vw) translateY(0px) rotate(0deg);
+                width: 50px;
+            }
+            25% {
+                width: 150px;
+                transform: translateX(-75vw) translateY(20px) rotate(5deg);
+            }
+            50% {
+                width: 80px;
+                transform: translateX(-50vw) translateY(-10px) rotate(-3deg);
+            }
+            75% {
+                width: 120px;
+                transform: translateX(-25vw) translateY(15px) rotate(4deg);
+            }
+            100% {
+                transform: translateX(100vw) translateY(0px) rotate(0deg);
+                width: 60px;
+            }
+        }
+        /* Parallax Layers */
+        
+        .parallax-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 130vh;
+            z-index: -2;
+            opacity: 0.15;
+        }
+        
+        #bg-layer1 {
+            background: radial-gradient(circle at 20% 80%, var(--accent-4), transparent 50%), radial-gradient(circle at 80% 20%, var(--accent-3), transparent 50%);
+        }
+        
+        #bg-layer2 {
+            background: radial-gradient(circle at 40% 40%, var(--accent-2), transparent 40%), radial-gradient(circle at 70% 70%, var(--accent-1), transparent 40%);
+            transform: translateY(15%);
+        }
+        /* AI Badge - HIDDEN ON MOBILE */
+        
+        .ai-badge {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--accent-2), var(--accent-1));
+            color: var(--black);
+            padding: 0.7rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            z-index: 1001;
+            box-shadow: 0 15px 40px rgba(98, 159, 173, 0.4);
+            animation: aiPulse 2.5s infinite;
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        
+        @keyframes aiPulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.08);
+            }
+        }
+        /* Navigation */
+        
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.97);
+            backdrop-filter: blur(30px);
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(74, 74, 74, 0.4);
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1.5rem;
+        }
+        
+        .logo-nav {
+            width: 140px;
+            height: auto;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.7));
+            transition: all 0.4s ease;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--light-gray);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            position: relative;
+            transition: all 0.4s ease;
+            white-space: nowrap;
+        }
+        
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-2), var(--accent-1));
+            border-radius: 2px;
+            transform: translateX(-50%);
+            transition: width 0.4s ease;
+        }
+        
+        .nav-links a:hover::before,
+        .nav-links a.active::before {
+            width: 100%;
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent-1);
+        }
+        
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+            z-index: 1001;
+            padding: 8px;
+        }
+        
+        .hamburger span {
+            width: 24px;
+            height: 3px;
+            background: var(--white);
+            border-radius: 2px;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform-origin: center;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+        /* Hero */
+        
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 1.5rem;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2), var(--white), var(--accent-3));
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: kineticGradient 6s ease infinite;
+            filter: drop-shadow(0 0 50px rgba(98, 159, 173, 0.7));
+            line-height: 1.1;
+        }
+        
+        @keyframes kineticGradient {
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+            25% {
+                background-position: 100% 0%;
+            }
+            50% {
+                background-position: 100% 100%;
+            }
+            75% {
+                background-position: 0% 100%;
+            }
+        }
+        
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 3vw, 1.8rem);
+            color: var(--light-gray);
+            margin-bottom: 3rem;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border: 2px solid var(--accent-2);
+            background: transparent;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 50px;
+            transition: all 0.5s ease;
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, var(--accent-2), var(--accent-1));
+            color: var(--black);
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(98, 159, 173, 0.6);
+        }
+        /* Sections */
+        
+        section {
+            padding: 6rem 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--white);
+            line-height: 1.2;
+        }
+        
+        h2 .accent {
+            color: var(--accent-2);
+            font-weight: 900;
+        }
+        /* Services Grid */
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .service-card {
+            background: rgba(42, 42, 42, 0.4);
+            backdrop-filter: blur(10px);
+            padding: 2rem 1.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(74, 74, 74, 0.3);
+            transition: all 0.4s ease;
+        }
+        
+        .service-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--accent-2);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        .service-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--white);
+        }
+        
+        .service-card p {
+            color: var(--light-gray);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        /* Portfolio */
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .portfolio-item {
+            height: 220px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        
+        .portfolio-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 10, 0.8);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .portfolio-item:hover::before {
+            opacity: 1;
+        }
+        
+        .portfolio-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem 1rem;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+        }
+        
+        .portfolio-item:hover .portfolio-overlay {
+            transform: translateY(0);
+        }
+        
+        .portfolio-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        /* Stats */
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 2rem;
+            text-align: center;
+            margin: 3rem 0;
+        }
+        
+        .stat-number {
+            font-size: clamp(2.5rem, 8vw, 3.5rem);
+            font-weight: 700;
+            color: var(--accent-2);
+            line-height: 1;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: var(--light-gray);
+            margin-top: 0.5rem;
+        }
+        /* Company Details */
+        
+        .company-details {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .company-details p {
+            color: var(--light-gray);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 3rem;
+        }
+        
+        .company-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .company-block {
+            background: rgba(42, 42, 42, 0.4);
+            padding: 2rem 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(74, 74, 74, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .company-block h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-2);
+            margin-bottom: 1rem;
+        }
+        
+        .company-block p {
+            color: var(--light-gray);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        /* Animations */
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Footer */
+        
+        .footer {
+            background: var(--dark-gray);
+            border-top: 1px solid var(--gray);
+            padding: 3rem 1.5rem 2rem;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--gray);
+        }
+        
+        .footer-section h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-2);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section a {
+            color: var(--light-gray);
+            text-decoration: none;
+            display: block;
+            padding: 0.5rem 0;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: var(--accent-2);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .social-link {
+            width: 36px;
+            height: 36px;
+            background: rgba(74, 74, 74, 0.3);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light-gray);
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: var(--accent-2);
+            color: var(--black);
+            transform: translateY(-2px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            color: var(--light-gray);
+            font-size: 0.85rem;
+        }
+        /* MOBILE RESPONSIVE - S Size Optimized */
+        
+        @media (max-width: 768px) {
+            /* HIDE AI BADGE ON MOBILE */
+            .ai-badge {
+                display: none !important;
+            }
+            /* Navigation */
+            .hamburger {
+                display: flex;
+            }
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: rgba(10, 10, 10, 0.98);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding: 2rem 0;
+                gap: 1.5rem;
+                transition: left 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            }
+            .nav-links.active {
+                left: 0;
+            }
+            .nav-links a {
+                font-size: 1.1rem;
+            }
+            /* Hero */
+            .hero {
+                padding: 0 1rem;
+                height: 90vh;
+            }
+            .hero h1 {
+                font-size: clamp(2.5rem, 9vw, 4rem);
+                margin-bottom: 1rem;
+                line-height: 1;
+            }
+            .hero-subtitle {
+                font-size: clamp(1rem, 4vw, 1.4rem);
+                margin-bottom: 2rem;
+                padding: 0 0.5rem;
+            }
+            .hero-buttons {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+            }
+            .btn {
+                width: 100%;
+                max-width: 280px;
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
+            }
+            /* Sections */
+            section {
+                padding: 4rem 1rem;
+            }
+            h2 {
+                font-size: clamp(1.8rem, 6vw, 2.8rem);
+                margin-bottom: 2rem;
+            }
+            /* Services */
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+            }
+            .service-card {
+                padding: 1.8rem 1.2rem;
+            }
+            /* Portfolio */
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            .portfolio-item {
+                height: 160px;
+                border-radius: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Worm Background -->
+    <div class="worms-bg" id="wormsBg"></div>
+
+    <!-- Parallax Backgrounds -->
+    <div id="bg-layer1" class="parallax-bg"></div>
+    <div id="bg-layer2" class="parallax-bg"></div>
+
+    <!-- AI Badge (HIDDEN ON MOBILE) -->
+    <div class="ai-badge" id="aiBadge">AI Personalization Active ✨</div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <img src="PARADOX Logo.png" alt="Paradox Studio" class="logo-nav">
+            <ul class="nav-links">
+                <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#portfolio" class="nav-link">Work</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#company" class="nav-link">Company</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero + ALL ORIGINAL CONTENT -->
+    <section id="home" class="hero fade-in">
+        <div class="hero-content">
+            <h1>Paradox Studio</h1>
+            <p class="hero-subtitle" id="personalizedSubtitle">Creating stunning visuals, 3D builds, websites, games, apps and digital experiences</p>
+            <div class="hero-buttons">
+                <a href="#portfolio" class="btn btn-primary">View Work</a>
+                <a href="#company" class="btn">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services (6 cards preserved) -->
+    <section id="services" class="fade-in">
+        <h2>Our<span class="accent"> Services</span></h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Websites</h3>
+                <p>Modern, responsive websites with advanced animations and immersive user experiences.</p>
+            </div>
+            <div class="service-card">
+                <h3>Games</h3>
+                <p>Browser and mobile games with stunning graphics and smooth gameplay mechanics.</p>
+            </div>
+            <div class="service-card">
+                <h3>Apps</h3>
+                <p>Cross-platform mobile and desktop applications with native performance.</p>
+            </div>
+            <div class="service-card">
+                <h3>3D Visuals</h3>
+                <p>Photorealistic 3D renders, animations and architectural visualizations.</p>
+            </div>
+            <div class="service-card">
+                <h3>Design</h3>
+                <p>UI/UX design, branding, motion graphics and digital product design.</p>
+            </div>
+            <div class="service-card">
+                <h3>Digital Cards</h3>
+                <p>NFT collections, trading cards and generative digital art projects.</p>
+            </div>
+        </div>
+    </section>
+    <!-- Portfolio -->
+    <section id="portfolio" class="fade-in">
+        <h2>Featured<span class="accent"> Work</span></h2>
+        <div class="portfolio-grid">
+            <div class="portfolio-item" style="background-image: url('https://images.unsplash.com/photo-1558618047-3c8c76ca8e44?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');">
+                <div class="portfolio-overlay">
+                    <div class="portfolio-title">Interactive Dashboard</div>
+                </div>
+            </div>
+            <div class="portfolio-item" style="background-image: url('https://images.unsplash.com/photo-1547658719-da2b848c1ad3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');">
+                <div class="portfolio-overlay">
+                    <div class="portfolio-title">3D Product Render</div>
+                </div>
+            </div>
+            <div class="portfolio-item" style="background-image: url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80');">
+                <div class="portfolio-overlay">
+                    <div class="portfolio-title">Mobile Game UI</div>
+                </div>
+            </div>
+            <div class="portfolio-item" style="background-image: url('https://images.unsplash.com/photo-1570549717069-33bed1b2c459?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');">
+                <div class="portfolio-overlay">
+                    <div class="portfolio-title">VR Experience</div>
+                </div>
+            </div>
+            <div class="portfolio-item" style="background-image: url('https://images.unsplash.com/photo-1461741745827-d0c8f4a55883?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');">
+                <div class="portfolio-overlay">
+                    <div class="portfolio-title">NFT Collection</div>
+                </div>
+            </div>
+            <div class="portfolio-item" style="background-image: url('https://images.unsplash.com/photo-1611606069175-6cf6c1cc3dea?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');">
+                <div class="portfolio-overlay">
+                    <div class="portfolio-title">Web Application</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section id="about" class="fade-in">
+        <h2>About<span class="accent"> Paradox</span></h2>
+        <div class="stats-grid">
+            <div>
+                <div class="stat-number">250+</div>
+                <div class="stat-label">Projects Completed</div>
+            </div>
+            <div>
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Happy Clients</div>
+            </div>
+            <div>
+                <div class="stat-number">5+</div>
+                <div class="stat-label">Years Experience</div>
+            </div>
+            <div>
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Satisfaction</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Company Details -->
+    <section id="company" class="fade-in">
+        <h2>Company<span class="accent"> Details</span></h2>
+        <div class="company-details">
+            <p>Paradox Studio is a premier digital innovation studio based in Jodhpur, Rajasthan, India. We specialize in creating cutting-edge websites, games, mobile apps, 3D visualizations, and digital products for forward-thinking brands worldwide.</p>
+            <div class="company-grid">
+                <div class="company-block">
+                    <h3>Our Mission</h3>
+                    <p>To push the boundaries of digital creativity through innovative technology and stunning visual design.</p>
+                </div>
+                <div class="company-block">
+                    <h3>Our Vision</h3>
+                    <p>Building the digital experiences of tomorrow, today. Pioneering immersive worlds and intuitive interfaces.</p>
+                </div>
+                <div class="company-block">
+                    <h3>Our Expertise</h3>
+                    <p>Git • HTML • CSS • Unity • Blender • Unreal Engine • Web3 • AR/VR</p>
+                </div>
+                <div class="company-block">
+                    <h3>Our Location</h3>
+                    <p>Jodhpur, Rajasthan, India<br>Serving clients globally from our creative hub.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Paradox Studio</h3>
+                <p>Digital innovation studio creating websites, games, apps, and immersive experiences.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link" style="font-size: 1.1rem;">𝕏</a>
+                    <a href="#" class="social-link">📷</a>
+                    <a href="#" class="social-link">💼</a>
+                    <a href="#" class="social-link">🎮</a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="#services">Websites</a></li>
+                    <li><a href="#services">Games</a></li>
+                    <li><a href="#services">Mobile Apps</a></li>
+                    <li><a href="#services">3D Visuals</a></li>
+                    <li><a href="#services">UI/UX Design</a></li>
+                    <li><a href="#services">Digital Cards</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#portfolio">Our Work</a></li>
+                    <li><a href="#company">Company Details</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul>
+                    <li>paradoxstudios@gmail.com</li>
+                    <li>+91 99291 44040</li>
+                    <li>Jodhpur, Rajasthan</li>
+                    <li>India</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Paradox Studio. All rights reserved. Jodhpur, Rajasthan, India.</p>
+        </div>
+    </footer>
+
+
+    <script>
+        // Create worms
+        function createWorms() {
+            const wormsBg = document.getElementById('wormsBg');
+            for (let i = 0; i < 12; i++) {
+                const worm = document.createElement('div');
+                worm.className = 'worm';
+                worm.style.top = Math.random() * 100 + '%';
+                worm.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                worm.style.animationDelay = Math.random() * 5 + 's';
+                wormsBg.appendChild(worm);
+            }
+        }
+
+        // AI Personalization (only shows on desktop)
+        function initAI() {
+            const isFirstVisit = !localStorage.getItem('paradoxVisit');
+            const subtitles = {
+                first: "Welcome! Discover our world-class digital innovation studio ✨",
+                web: "Crafting cutting-edge websites that captivate and convert 🚀",
+                games: "Building immersive games that redefine gaming experiences 🎮"
+            };
+
+            const subtitleEl = document.getElementById('personalizedSubtitle');
+            const badge = document.getElementById('aiBadge');
+
+            const visitCount = parseInt(localStorage.getItem('visitCount') || '0');
+            const key = isFirstVisit ? 'first' : ['web', 'games'][visitCount % 2];
+            subtitleEl.textContent = subtitles[key];
+
+            // Only show badge on desktop
+            if (window.innerWidth > 768) {
+                setTimeout(() => {
+                    badge.style.opacity = '1';
+                    badge.style.transform = 'scale(1)';
+                }, 1000);
+            }
+
+            localStorage.setItem('paradoxVisit', 'true');
+            localStorage.setItem('visitCount', visitCount + 1);
+        }
+
+        // Hamburger menu functionality
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking links
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Close menu on outside click
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-container')) {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Navigation scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Parallax
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            document.querySelectorAll('.parallax-bg').forEach((bg, i) => {
+                bg.style.transform = `translateY(${scrolled * (0.3 + i * 0.15)}px)`;
+            });
+        });
+
+        // Initialize
+        window.addEventListener('load', () => {
+            createWorms();
+            initAI();
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                document.querySelector('.nav-links').classList.remove('active');
+                document.getElementById('hamburger').classList.remove('active');
+            }
+        });
+    </script>
+</body>
+
+</html>
